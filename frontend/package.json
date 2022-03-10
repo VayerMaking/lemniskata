@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@mantine/core": "^4.0.0",
+    "@mantine/hooks": "^4.0.0",
+    "@mantine/next": "^4.0.0"
+  }
+}
