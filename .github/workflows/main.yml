@@ -20,8 +20,9 @@ jobs:
           python-version: ${{ matrix.python-version }}
           architecture: 'x64'
         
-      - name: Install dependencies
+      - name: Install Dependencies For main Module
         run: |
+          cd /src/backend/main
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install -e .
