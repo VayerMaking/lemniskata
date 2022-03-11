@@ -1,6 +1,6 @@
 import socket
 import time
-HOST = 'gateway'
+HOST = 'test_gateway'
 PORT = 2001
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
