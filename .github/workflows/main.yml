@@ -26,5 +26,5 @@ jobs:
           pip install -r requirements.txt
         
       - name: Run Unit Tests
-        run: python -m pytest --import-mode=append tests/
+        run: python -m pytest --import-mode=append src/backend/tests/
           
