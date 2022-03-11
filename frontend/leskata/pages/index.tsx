@@ -1,52 +1,31 @@
 import { useState } from 'react';
-import { AppShell, Burger, Header, MediaQuery, Navbar, Text, useMantineTheme } from '@mantine/core';
-import { TypeBox } from '../components/index/TypeBox'
-
+import { AppShell, Burger, Header, MediaQuery, Navbar, Text, useMantineTheme, Box } from '@mantine/core';
+// import { DataForm } from '../components/index/DataForm'
+import React from 'react'
+import dynamic from 'next/dynamic'
+import { Map, Marker, ZoomControl } from "pigeon-maps"
+// import Leaf from '../components/index/Leaf'
 function Main() {
   const [opened, setOpened] = useState(false);
   const theme = useMantineTheme();
+  const position = [51.505, -0.09]
 
+  const MyAwesomeMap = dynamic(() => import('../components/index/Leaf'), { ssr: false });
+
+  function mapTiler (x, y, z) {
+    return `https://trek.nasa.gov/tiles/Mars/EQ/Mars_MOLA_blend200ppx_HRSC_ClrShade_clon0dd_200mpp_lzw/1.0.0//default/default028mm/${x}/${y}/${z}.jpg`
+  }
+  // http://moontrek.jpl.nasa.gov/trektiles/Moon/EQ/LRO_WAC_Mosaic_Global_303ppd_v02/1.0.0/default/default028mm/0/0/0.jpg?api_key=6BaJSTfT8toGrjcyJwImEvSg2aofL9bOVYpVYL8d
   return (
     <div>
-    <AppShell
-      // navbarOffsetBreakpoint controls when navbar should no longer be offset with padding-left
-      navbarOffsetBreakpoint="sm"
-      // fixed prop on AppShell will be automatically added to Header and Navbar
-      fixed
-      navbar={
-        <Navbar
-          p="md"
-          hiddenBreakpoint="sm"
-          hidden={!opened}
-          width={{ sm: 300, lg: 400 }}
-        >
-          <Navbar.Section>{<TypeBox/>}</Navbar.Section>
-          <Navbar.Section grow mt="md">{/* Links sections */}</Navbar.Section>
-          <Navbar.Section>{/* Footer with user */}</Navbar.Section>
-          
-        </Navbar>
-      }
-      header={
-        <Header height={70} p="md">
-          {/* Handle other responsive styles with MediaQuery component or createStyles function */}
-          <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-            <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
-              <Burger
-                opened={opened}
-                onClick={() => setOpened((o) => !o)}
-                size="sm"
-                color={theme.colors.gray[6]}
-                mr="xl"
-              />
-            </MediaQuery>
+    
+      <Box>
+      {/* <Map provider={mapTiler} height={300} defaultCenter={[5, 5]} defaultZoom={5}>
+      <ZoomControl />
+      </Map> */}
 
-            <Text>Lemniskata</Text>
-          </div>
-        </Header>
-      }
-    >
-      <Text>Map</Text>
-    </AppShell>
+        <MyAwesomeMap/>
+    </Box>
     </div>
   );
 }
