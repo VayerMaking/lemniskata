@@ -26,5 +26,13 @@ jobs:
           pip install -r requirements.txt
         
       - name: Run Unit Tests
-        run: python -m pytest --import-mode=append tests/
+      
+        run: |
+          set -e
+          # get parent folder
+          DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
+          PARENT_DIRECTORY="${DIR%/*}"
+          # go to parent folder
+          cd ${PARENT_DIRECTORY}
+          python -m pytest --import-mode=append src/backend/tests/
           
