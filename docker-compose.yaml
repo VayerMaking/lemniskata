@@ -1,5 +1,13 @@
 version: "3.6"
 services:
+  gateway:
+    build: ./src/backend/gateway
+    command: python main.py
+    ports:
+      - "80:80"
+    networks:
+      - leminiskata
+
   test_gateway:
     build: ./src/backend/test_gateway
     command: python main.py
