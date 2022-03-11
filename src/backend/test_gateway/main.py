@@ -1,6 +1,6 @@
 import socket
 import time
-HOST = 'gateway'
+HOST = 'test_gateway'
 PORT = 2001
 
 print("Server start at: %s/:%s" % (HOST, PORT))
