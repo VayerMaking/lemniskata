@@ -4,7 +4,7 @@ services:
     build: ./src/backend/gateway
     command: python main.py
     ports:
-      - "80:80"
+      - "6969:6969"
     networks:
       - leminiskata
 
