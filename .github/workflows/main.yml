@@ -23,9 +23,7 @@ jobs:
       - name: Install Dependencies For main Module
         run: |
           cd src/backend/main
-          python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install -e .
         
       - name: Run Unit Tests
         run: python -m pytest --import-mode=append tests/
