@@ -595,3 +595,7 @@ xcuserdata/
 # Support for Project snippet scope
 
 # End of https://www.toptal.com/developers/gitignore/api/jetbrains+all,react,reactnative,pycharm,visualstudiocode,macos,intellij,clion+all
+
+# pycache
+
+*__pycache__
