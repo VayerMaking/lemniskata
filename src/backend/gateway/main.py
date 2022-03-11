@@ -11,7 +11,7 @@ import werkzeug
 from werkzeug.exceptions import HTTPException
 
 # socket connection
-from src.backend.main import Subsystem
+from src.backend.main.subsystem import Subsystem
 
 
 # socket connections setup
