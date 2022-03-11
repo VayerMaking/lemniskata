@@ -1,0 +1,38 @@
+version: "3.6"
+services:
+  gateway:
+    build: ./src/backend/gateway
+    command: python main.py
+    ports:
+      - "6969:6969"
+    networks:
+      - leminiskata
+
+  test_gateway:
+    build: ./src/backend/test_gateway
+    command: python main.py
+    ports:
+      - "2001:2001"
+    networks:
+      - leminiskata
+
+  test_service:
+    build: ./src/backend/test_service
+    command: python main.py
+    depends_on:
+      - test_gateway
+    ports:
+      - "2002:2002"
+    networks:
+      - leminiskata
+
+  redis_db:
+    image: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - leminiskata
+
+networks:
+    leminiskata:
+        driver: bridge
