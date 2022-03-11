@@ -1,10 +1,7 @@
 version: "3.6"
 services:
-  gateway:
+  test_gateway:
     build: ./src/backend/test_gateway
-    # environment:
-    #   - PORT=80
-    #   - FLASK_DEBUG=1
     command: python main.py
     ports:
       - "2001:2001"
@@ -13,14 +10,18 @@ services:
 
   test_service:
     build: ./src/backend/test_service
-    environment:
-      - PORT=80
-      - FLASK_DEBUG=1
     command: python main.py
     depends_on:
-      - gateway
+      - test_gateway
     ports:
       - "2002:2002"
+    networks:
+      - leminiskata
+
+  redis_db:
+    image: redis
+    ports:
+      - "6379:6379"
     networks:
       - leminiskata
 
