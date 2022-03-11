@@ -10,11 +10,34 @@ from typing import List
 import werkzeug
 from werkzeug.exceptions import HTTPException
 
+# socket connection
+from src.backend.main import Subsystem
+
+
+# socket connections setup
+gw_to_height_address = 'height_service'
+gw_to_weather_address = 'weather_service'
+gw_to_height_port = '2003'
+gw_to_weather_port = '2004'
+
+gw_to_height_socket = Subsystem(gw_to_height_address, gw_to_height_port)
+gw_to_weather_socket = Subsystem(gw_to_weather_address, gw_to_height_port)
+
+gw_to_height_socket.connect_to(gw_to_height_address, gw_to_height_port)
+gw_to_weather_socket.connect_to(gw_to_weather_address, gw_to_weather_port)
+
+
 app = Flask(__name__)
 
 
 @app.route("/")
 def index():
+    return "leminiskata api index page"
+
+
+@app.route("/height", methods=['GET'])
+def height():
+    gw_to_height_socket.send("hello from gateway")
     return "leminiskata api index page"
 
 
