@@ -24,8 +24,7 @@ def preprocess_img(fimg_name):
 
 def clusterize(data):
     model = DBSCAN(eps=2.5, min_samples=2, algorithm='ball_tree', n_jobs=4)
-    model.fit_predict(data)
-    pred = model.fit_predict(data)
+    model.fit(data)
     print(f'# clusters: {len(set(model.labels_))}')
     print(f'labels {model.labels_}')
     # to_rem = []
@@ -58,15 +57,13 @@ calculates the centroids of the clusters
 def estimate_centroids(clusters):
     clusters_with_centroids = {}
     for cluster_id, coords3d in clusters.items():
-        # coords2d = [(x, y, z) for x,y,z in coords3d]
         clusters_with_centroids[cluster_id] = tuple(np.mean(coords3d, axis=0))
-        # print(clusters_with_centroids[cluster_id])
     return clusters_with_centroids
 
 
 '''
 Accepts clusters = { cluster_id : [ (x, y, z), (x1, y1, z1), ... ] }
-Produces { cluter_id : [ (x, y), .. ] } where (x,y) are euclidean coords
+Produces { cluster_id : [ (x, y), .. ] } where (x,y) are euclidean coords
 '''
 def group_clusters(clusters):
     grouped = {}
@@ -86,39 +83,39 @@ Returns [ a1, a2, a3, a4, ...] where aN е [0; 1]
 '''
 def make_probab_map(grouped_clusters, centroids):
     probab_map = {}
+    print("Centroids")
     for cluster_id in grouped_clusters.keys():
+        cluster_prob_map = {}
         cluster_centroid = centroids[cluster_id]
-        total_coords3d = group_clusters[cluster_id]
+        total_coords3d = grouped_clusters[cluster_id]
         for coords in total_coords3d:
             dist = distance.euclidean(cluster_centroid, coords)
-            probab_map[tuple(coords)] = dist
-    max_dist = max(probab_map.values())
-    if max_dist == 0:
-        max_dist = 1
-    for k, _ in probab_map.items():
-        probab_map[k] /= max_dist
+            cluster_prob_map[tuple(coords)] = dist
+        cluster_prob_map = dict(sorted(cluster_prob_map.items(), key = itemgetter(1)))
+        assert len(list(cluster_prob_map.values())) > 0
+        max_dist = max(cluster_prob_map.values())
+        print(f"#{cluster_id}: cluster_prob_map = {cluster_prob_map}")
+        for k, _ in cluster_prob_map.items():
+            cluster_prob_map[k] /= max_dist
+        probab_map[cluster_id] = cluster_prob_map
+    return probab_map
 
 
 '''
-Accepts clusters of the form { cluster_id : [ (x, y, z), (x1, y1, z1), ... ] }
-Selects points which should be passed back to gatewat for rendering.
+Accepts clusters of the form { cluster_id : [ (x, y, z), (x1, y1, z1), ... ] } and map with probabilities.
+Selects points which should be passed back to gateway for rendering.
 '''
 def geoborders(grouped_clusters, probab_map):
     N = 10
-    for cluster_id, coords3d in grouped_clusters:
-        res = dict(sorted(probab_map.items(), key = itemgetter(1), reverse = False)[:N])
+    gb = {cluster_id:list(probab_map[cluster_id].values())[:N] for cluster_id, coords3d in grouped_clusters.items()}
+    for cluster_id, coords3d in grouped_clusters.items():
+        gb[cluster_id] = list(probab_map[cluster_id].values())[:N]
+    return gb
 
-
-def main():
+def eval():
     data = preprocess_img('31.jpg')
     clusters = clusterize(data)
     grouped_clusters = group_clusters(clusters)
     centroids = estimate_centroids(grouped_clusters)
-    draw_clusters(clusters, None)
-    # probab_map = make_probab_map(group_clusters, clusters)
-    # print(probab_map)
-    # coords = translate_map()
-
-
-if __name__ == "__main__":
-    main()
+    probab_map = make_probab_map(grouped_clusters, centroids)
+    gb = geoborders(grouped_clusters, probab_map)
