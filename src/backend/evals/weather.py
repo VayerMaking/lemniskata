@@ -14,7 +14,7 @@ class WeatherEvaluater:
         weather_data = requests \
             .get("http://wheather_api:6969/",
                  params={"longitude": longitude, "latitude": latitude}).json()
-        day_weather = weather_data["sol_keys"][day]
+        day_weather = weather_data["sol_keys"][int(day)]
 
         return dict(
             temperature=day_weather["AT"],
