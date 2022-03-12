@@ -1,55 +1,40 @@
+from importlib.util import module_for_loader
 import numpy as np
 from sklearn.cluster import DBSCAN
 from PIL import Image
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+#%matplotlib inline
 
-img = Image.open('0.jpg')
-img_data = np.asarray(img)
 
-data = []
+def preprocess_img(fimg_name):
+    img = Image.open(fimg_name)
+    img_data = np.asarray(img)
+    data = []
+    for x in range(img.width):
+        for y in range(img.height):
+            z = int(3 * img_data[x][y][2] + 2 * img_data[x][y][1] + img_data[x][y][0])
+            data.append([x, y, z])
+    return np.array(data)
+    
+def cluster(data):
+    model = DBSCAN(eps=2.5, min_samples=2, algorithm='ball_tree', n_jobs=4)
+    model.fit_predict(data)
+    pred = model.fit_predict(data)
+    print(f'# clusters: {len(set(model.labels_))}')
+    print(f'labels {model.labels_}')
+    # to_rem = []
+    # for idx, l in enumerate(model.labels_):
+    #     if l == -1:
+    #         to_rem.append(idx)
+    # for r_idx in to_rem:
+    #     del model.labels_[r_idx]
+    #     del data[r_idx]
+    return model.labels_
 
-for x in range(img.width):
-    new_data = []
-    for y in range(img.height):
-        z = 3 * img_data[x][y][2] + 2 * img_data[x][y][1] + img_data[x][y]
-        new_data.append(x, y, calc_height())
-        data.append(new_data)
-
-clustering = DBSCAN(eps=0.7, min_samples=2).fit(new_data)
-core_samples_mask[clustering.core_sample_indices_] = True
-labels = clustering.labels_
-core_samples_mask = np.zeros_like(labels, dtype=bool)
-n_clusters_ = len(set(labels)) - (1 if -1 in labels else 0)
-n_noise_ = list(labels).count(-1)
-
-unique_labels = set(labels)
-colors = [plt.cm.Spectral(each) for each in np.linspace(0, 1, len(unique_labels))]
-for k, col in zip(unique_labels, colors):
-    if k == -1:
-        # Black used for noise.
-        col = [0, 0, 0, 1]
-
-    class_member_mask = labels == k
-
-    xy = X[class_member_mask & core_samples_mask]
-    plt.plot(
-        xy[:, 0],
-        xy[:, 1],
-        "o",
-        markerfacecolor=tuple(col),
-        markeredgecolor="k",
-        markersize=14,
-    )
-
-    xy = X[class_member_mask & ~core_samples_mask]
-    plt.plot(
-        xy[:, 0],
-        xy[:, 1],
-        "o",
-        markerfacecolor=tuple(col),
-        markeredgecolor="k",
-        markersize=6,
-    )
-
-plt.title("Estimated number of clusters: %d" % n_clusters_)
-plt.show()
+def draw_cluster(data, labels):
+    fig = plt.figure()
+    ax = Axes3D(fig)
+    ax.scatter(data.T[0], data.T[1], data.T[2], c=labels, s=3)
+    ax.view_init(azim=200)
+    plt.show()
