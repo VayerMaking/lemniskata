@@ -1,19 +1,25 @@
-import socket
-import time
-HOST = 'test_gateway'
-PORT = 2001
+from aiohttp import web
+import socketio
 
-print("Server start at: %s/:%s" % (HOST, PORT))
-print("Waiting for connection...")
+sio = socketio.AsyncServer()
+app = web.Application()
+sio.attach(app)
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.bind((HOST, PORT))
-s.listen()
-conn, addr = s.accept()
-print('Connected by', addr)
 
-while True:
-    data = conn.recv(1024)
-    if not data:
-        break
-    print(f'Received from: {addr} :', data)
+@sio.event
+def connect(sid, environ):
+    print("connect ", sid)
+
+
+@sio.event
+async def chat_message(sid, data):
+    print("message ", data)
+
+
+@sio.event
+def disconnect(sid):
+    print('disconnect ', sid)
+
+
+if __name__ == '__main__':
+    web.run_app(app)

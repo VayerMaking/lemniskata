@@ -1,10 +1,28 @@
-import socket
-import time
-HOST = 'test_gateway'
-PORT = 2001
+import asyncio
+import socketio
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect((HOST, PORT))
+sio = socketio.AsyncClient()
 
-while True:
-    s.send(b'Hello, world. IPC success!')
+
+@sio.event
+async def connect():
+    print('connection established')
+
+
+@sio.event
+async def message(data):
+    print('message received with ', data)
+    await sio.emit('my response', {'response': 'my response'})
+
+
+@sio.event
+async def disconnect():
+    print('disconnected from server')
+
+
+async def main():
+    await sio.connect('http://test_gateway:8080')
+    await sio.wait()
+
+if __name__ == '__main__':
+    asyncio.run(main())
