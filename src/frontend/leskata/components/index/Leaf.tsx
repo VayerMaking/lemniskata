@@ -39,7 +39,7 @@ const purpleOptions = { color: 'purple' }
 
 const ShowPoly = ({ mapContainer, polygons }) => {
   return polygons.map((poly, index) => {
-    return  <Circle key={index} uniceid={index} center={poly} pathOptions={purpleOptions} radius={1000000} />
+    return  <Circle key={index} center={poly} pathOptions={purpleOptions} radius={1000000} />
   })
 }
 
