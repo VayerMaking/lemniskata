@@ -4,6 +4,7 @@ import { AppShell, Burger, Header, MediaQuery, Navbar, Text, useMantineTheme, Bo
 import React from 'react'
 import dynamic from 'next/dynamic'
 import { Map, Marker, ZoomControl } from "pigeon-maps"
+import HomePage from './home';
 // import Leaf from '../components/index/Leaf'
 function Main() {
   const [opened, setOpened] = useState(false);
@@ -23,7 +24,7 @@ function Main() {
       {/* <Map provider={mapTiler} height={300} defaultCenter={[5, 5]} defaultZoom={5}>
       <ZoomControl />
       </Map> */}
-
+{/* <HomePage/> */}
         <MyAwesomeMap/>
     </Box>
     </div>
