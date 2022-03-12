@@ -20,11 +20,19 @@ class MyHandler(BaseHTTPRequestHandler):
         if self.path == '/generate/map/height':
             content_length = int(self.headers['Content-Length'])
             body = self.rfile.read(content_length)
-            url = json.loads(body)['url']
-            img_res = requests.get(url)
-            img = Image.open(BytesIO(img_res.content))
-            # TODO call algorithm
-            self.wfile.write(body)
+            json_array = json.loads(body)
+            urls_array = []
+            for point in json_array:
+                x_coordinate = point['x']
+                y_coordinate = point['y']
+                z_coordinate = point['z']
+                url = f'https://trek.nasa.gov/tiles/Mars/EQ/Mars_MOLA_blend200ppx_HRSC_ClrShade_clon0dd_200mpp_lzw/1.0.0//default/default028mm/{z_coordinate}/{y_coordinate}/{x_coordinate}.jpg'
+                urls_array.append(url)
+                img_res = requests.get(url)
+                img = Image.open(BytesIO(img_res.content))
+                # TODO call algorithm
+
+            self.wfile.write(urls_array)
 
 
 httpd = socketserver.TCPServer(("height_service", 6972), MyHandler)
