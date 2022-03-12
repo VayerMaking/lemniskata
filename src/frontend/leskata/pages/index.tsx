@@ -24,9 +24,9 @@ function Main() {
       {/* <Map provider={mapTiler} height={300} defaultCenter={[5, 5]} defaultZoom={5}>
       <ZoomControl />
       </Map> */}
-{/* <HomePage/> */}
-        <MyAwesomeMap/>
-    </Box>
+        <HomePage />
+        <MyAwesomeMap />
+      </Box>
     </div>
   );
 }

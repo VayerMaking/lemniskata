@@ -6,7 +6,7 @@ services:
     ports:
       - "6969:6969"
     networks:
-      - leminiskata
+      - lemniskata
 
   test_gateway:
     build: ./src/backend/test_gateway
@@ -14,7 +14,7 @@ services:
     ports:
       - "6970:6970"
     networks:
-      - leminiskata
+      - lemniskata
 
   test_service:
     build: ./src/backend/test_service
@@ -24,7 +24,7 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - leminiskata
+      - lemniskata
 
   weather_service:
     build: ./src/backend/weather_service
@@ -34,7 +34,7 @@ services:
     ports:
       - "6971:6971"
     networks:
-      - leminiskata
+      - lemniskata
 
   height_service:
     build: ./src/backend/height_service
@@ -44,24 +44,24 @@ services:
     ports:
       - "6972:6972"
     networks:
-      - leminiskata
+      - lemniskata
 
   redis_db:
     image: redis
     ports:
       - "6379:6379"
     networks:
-      - leminiskata
+      - lemniskata
 
   weather_api:
-    image: leminiskata/weather_api
+    image: vayer/lemniskata:weather_api
     command: python main.py
     ports:
       - "60:60"
     networks:
-      - leminiskata
+      - lemniskata
 
 
 networks:
-    leminiskata:
+    lemniskata:
         driver: bridge
