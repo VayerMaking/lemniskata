@@ -12,7 +12,7 @@ def index():
 
 @app.route("/nasa/api/weather")
 def weatherApi():
-    response = requests.post(
+    response = requests.get(
         'http://weather_api:60', json=request.get_json())
     return response.json()
 
@@ -34,4 +34,4 @@ def getWeatherMap():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=6970)
+    app.run(host="0.0.0.0", port=6969)
