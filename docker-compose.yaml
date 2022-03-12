@@ -54,7 +54,7 @@ services:
       - leminiskata
 
   weather_api:
-    image: leminiskata/weather_api
+    image: vayer/leminiskata:weather_api
     command: python main.py
     ports:
       - "60:60"
