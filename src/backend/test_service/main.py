@@ -1,28 +1,14 @@
-import asyncio
-import socketio
+# echo-client.py
 
-sio = socketio.AsyncClient()
+import socket
 
+HOST = "test_gateway"  # The server's hostname or IP address
+PORT = 8080  # The port used by the server
+while True:
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.connect((HOST, PORT))
 
-@sio.event
-async def connect():
-    print('connection established')
+        s.sendall(b"Hello, world")
+        data = s.recv(1024)
 
-
-@sio.event
-async def message(data):
-    print('message received with ', data)
-    await sio.emit('my response', {'response': 'my response'})
-
-
-@sio.event
-async def disconnect():
-    print('disconnected from server')
-
-
-async def main():
-    await sio.connect('http://test_gateway:8080')
-    await sio.wait()
-
-if __name__ == '__main__':
-    asyncio.run(main())
+print(f"Received {data!r}")

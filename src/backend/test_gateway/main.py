@@ -1,25 +1,20 @@
-from aiohttp import web
-import socketio
+# echo-server.py
 
-sio = socketio.AsyncServer()
-app = web.Application()
-sio.attach(app)
+import socket
 
+HOST = "test_gateway"  # Standard loopback interface address (localhost)
+PORT = 8080  # Port to listen on (non-privileged ports are > 1023)
 
-@sio.event
-def connect(sid, environ):
-    print("connect ", sid)
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    s.bind((HOST, PORT))
+    s.listen()
+    conn, addr = s.accept()
+    with conn:
+        print(f"Connected by {addr}")
+        while True:
+            data = conn.recv(1024)
 
+            if not data:
+                break
 
-@sio.event
-async def chat_message(sid, data):
-    print("message ", data)
-
-
-@sio.event
-def disconnect(sid):
-    print('disconnect ', sid)
-
-
-if __name__ == '__main__':
-    web.run_app(app)
+            conn.sendall(data)
