@@ -1,22 +1,24 @@
-# flask
-from flask import Flask, Response
-from flask import render_template, request, flash, redirect, url_for, session, jsonify, send_from_directory, abort
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import relationship
-from sqlalchemy.dialects import postgresql
-from sqlalchemy import desc
-from dataclasses import dataclass
-from typing import List
-import werkzeug
-from werkzeug.exceptions import HTTPException
+from flask import Flask, request
+
+from src.backend.evals.weather import WeatherEvaluater
 
 app = Flask(__name__)
 
 
 @app.route("/")
 def index():
-    return "leminiskata api index page"
+    return "lemniskata api index page"
+
+
+@app.route("/api/weather", methods=["GET"])
+def fetch_weather_data() -> str:
+    longitude = request.args.get('longitude')
+    latitude = request.args.get('latitude')
+    day: int = int(request.args.get('day'))
+
+    return weather.check_weather(longitude, latitude, day)
 
 
 if __name__ == "__main__":
+    weather = WeatherEvaluater()
     app.run(host="0.0.0.0", port=6969)
