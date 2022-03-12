@@ -9,3 +9,4 @@ pycodestyle==2.8.0
 SQLAlchemy==1.4.32
 toml==0.10.2
 Werkzeug==2.0.3
+requests

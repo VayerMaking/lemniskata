@@ -1,20 +1,21 @@
-# echo-server.py
+from flask import Flask, jsonify, make_response
+import requests
 
-import socket
 
-HOST = "test_gateway"  # Standard loopback interface address (localhost)
-PORT = 8080  # Port to listen on (non-privileged ports are > 1023)
+app = Flask(__name__)
 
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.bind((HOST, PORT))
-    s.listen()
-    conn, addr = s.accept()
-    with conn:
-        print(f"Connected by {addr}")
-        while True:
-            data = conn.recv(1024)
 
-            if not data:
-                break
+@app.route("/")
+def index():
+    return "lemniskata api index page"
 
-            conn.sendall(data)
+
+@app.route("/qwerty")
+def qwerty():
+    response = requests.get('http://test_service:8080/asdf')
+    # response.raise_for_status()
+    return response.json()
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=6970)

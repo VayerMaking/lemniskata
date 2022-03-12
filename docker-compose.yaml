@@ -12,7 +12,7 @@ services:
     build: ./src/backend/test_gateway
     command: python main.py
     ports:
-      - "2001:2001"
+      - "6970:6970"
     networks:
       - leminiskata
 
@@ -22,7 +22,7 @@ services:
     depends_on:
       - test_gateway
     ports:
-      - "2002:2002"
+      - "8080:8080"
     networks:
       - leminiskata
 
