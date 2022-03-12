@@ -15,6 +15,7 @@ def index():
 def qwerty():
     response = requests.post(
         'http://weather_service:6971/generate/map/weather', json=request.get_json())
+
     return response.json()
 
 
