@@ -12,7 +12,7 @@ services:
     build: ./src/backend/test_gateway
     command: python main.py
     ports:
-      - "2001:2001"
+      - "6970:6970"
     networks:
       - leminiskata
 
@@ -22,7 +22,27 @@ services:
     depends_on:
       - test_gateway
     ports:
-      - "2002:2002"
+      - "8080:8080"
+    networks:
+      - leminiskata
+
+  weather_service:
+    build: ./src/backend/weather_service
+    command: python main.py
+    depends_on:
+      - gateway
+    ports:
+      - "6971:6971"
+    networks:
+      - leminiskata
+
+  height_service:
+    build: ./src/backend/height_service
+    command: python main.py
+    depends_on:
+      - gateway
+    ports:
+      - "6972:6972"
     networks:
       - leminiskata
 
