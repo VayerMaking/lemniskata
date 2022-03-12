@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, make_response
+from flask import Flask, jsonify, make_response, request
 import requests
 
 
@@ -10,9 +10,19 @@ def index():
     return "lemniskata api index page"
 
 
-@app.route("/qwerty")
-def qwerty():
-    response = requests.get('http://test_service:8080/asdf')
+@app.route("/getHeightMap")
+def getMaps():
+    # TODO read coordinates from json body, dl image for coordinates and pass it to service
+    response = requests.post(
+        'http://height_service:6971/generate/map/height', json=request.get_json())
+    return response.json()
+
+
+@app.route("/getWeatherMap")
+def getMaps():
+    # TODO read coordinates from json body, dl image for coordinates and pass it to service
+    response = requests.post(
+        'http://weather_service:6971/generate/map/weather', json=request.get_json())
     return response.json()
 
 
