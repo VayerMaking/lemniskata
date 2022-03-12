@@ -26,6 +26,16 @@ services:
     networks:
       - leminiskata
 
+  weather_service:
+    build: ./src/backend/weather_service
+    command: python main.py
+    depends_on:
+      - test_gateway
+    ports:
+      - "6971:6971"
+    networks:
+      - leminiskata
+
   redis_db:
     image: redis
     ports:
