@@ -20,6 +20,21 @@ const polygon = [
   ],
 ]
 
+const Iter = (x,y) => {
+
+  x -= 1
+  y -= 1
+  let arr = []
+
+  for(let k = 0; k < 3; k++ ){
+    for(let p = 0; p < 3; p++){
+      arr.push({x:x+k, y:y+p})
+    }
+  }
+
+  return arr
+}
+
 const purpleOptions = { color: 'purple' }
 
 const ShowPoly = ({ mapContainer, polygons }) => {
@@ -91,14 +106,22 @@ const GetMousePos = ({ map }) => {
         if(128 - Math.abs(e.layerPoint.y - y) > 0 && 128 - Math.abs(e.layerPoint.x - x) > 0 ){
           console.log(x,y);
           //console.log(e.layerPoint.x, e.layerPoint.y);
-          let picX = children[k].src.split('https://trek.nasa.gov/tiles/Mars/EQ/Mars_MOLA_blend200ppx_HRSC_ClrShade_clon0dd_200mpp_lzw/1.0.0//default/default028mm/')[1].split('/')[1];
-          let picY = children[k].src.split('https://trek.nasa.gov/tiles/Mars/EQ/Mars_MOLA_blend200ppx_HRSC_ClrShade_clon0dd_200mpp_lzw/1.0.0//default/default028mm/')[1].split('/')[2].split('.')[0];
+          let picZ = children[k].src.split('https://trek.nasa.gov/tiles/Mars/EQ/Mars_MOLA_blend200ppx_HRSC_ClrShade_clon0dd_200mpp_lzw/1.0.0//default/default028mm/')[1].split('/')[0];
+          let picY = children[k].src.split('https://trek.nasa.gov/tiles/Mars/EQ/Mars_MOLA_blend200ppx_HRSC_ClrShade_clon0dd_200mpp_lzw/1.0.0//default/default028mm/')[1].split('/')[1];
+          let picX = children[k].src.split('https://trek.nasa.gov/tiles/Mars/EQ/Mars_MOLA_blend200ppx_HRSC_ClrShade_clon0dd_200mpp_lzw/1.0.0//default/default028mm/')[1].split('/')[2].split('.')[0];
+
+          let iter = Iter(picX,picY)
+          
+          for(let p=0; p < iter.length; p++){
+            json.push(iter[p])
+          }
+
+          //8
 
           let url = "https://trek.nasa.gov/tiles/Mars/EQ/Mars_MOLA_blend200ppx_HRSC_ClrShade_clon0dd_200mpp_lzw/1.0.0//default/default028mm/3/3/4.jpg"
           
-          console.log(children[k].src );
-          json.push({x: x, y:y, url:children[k].src})
-          json.push({x: x-256, y: y-256 })
+          console.log(children[k].src);
+          // json.push({x: x, y:y, url:children[k].src})
           // console.log(map.layerPointToContainerPoint({x:x,y:y}))
             // console.log(map.containerPointToLatLng({x:map.layerPointToContainerPoint({x:x,y:y}).x,y: map.layerPointToContainerPoint({x:x,y:y}).y}))
 
@@ -110,7 +133,7 @@ const GetMousePos = ({ map }) => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
-   // console.log(JSON.stringify(json));
+   console.log(JSON.stringify(json));
     //  const [name, setData] = useState(null);
     
     
@@ -130,6 +153,14 @@ const GetMousePos = ({ map }) => {
       data : JSON.stringify(json[0])
     };
     
+    // axios(config)
+    // .then(function (response) {
+    //   console.log(JSON.stringify(response.data));
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    // });
+
     // axios(config)
     // .then(function (response) {
     //   console.log(JSON.stringify(response.data));
