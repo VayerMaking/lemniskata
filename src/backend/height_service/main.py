@@ -20,7 +20,7 @@ class MyHandler(BaseHTTPRequestHandler):
         if self.path == '/generate/map/height':
             content_length = int(self.headers['Content-Length'])
             body = self.rfile.read(content_length)
-            url = body['url']
+            url = json.loads(body)['url']
             img_res = requests.get(url)
             img = Image.open(BytesIO(img_res.content))
             # TODO call algorithm
