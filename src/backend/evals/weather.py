@@ -6,15 +6,15 @@ class WeatherEvaluater:
         super().__init__()
         self.api_url = "https://api.nasa.gov/insight_weather/"
 
-        self.__weather_temperature_boundaries = range(-120, 0)
-        self.__weather_pressure_boundaries = range(-120, 0)
-        self.__weather_wind_boundaries = range(-120, 0)
+        self.__weather_temperature_boundaries = range(-50, -7)
+        self.__weather_pressure_boundaries = range(682, 730)
+        self.__weather_wind_boundaries = range(5, 12)
 
     def check_weather(self, longitude, latitude, day):
         weather_data = requests \
-            .get("https://api.nasa.gov/insight_weather/",
+            .get("http://wheather_api:6969/",
                  params={"longitude": longitude, "latitude": latitude}).json()
-        day_weather = weather_data["sol_keys"][day]
+        day_weather = weather_data["sol_keys"][int(day)]
 
         return dict(
             temperature=day_weather["AT"],
