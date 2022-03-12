@@ -30,9 +30,19 @@ services:
     build: ./src/backend/weather_service
     command: python main.py
     depends_on:
-      - test_gateway
+      - gateway
     ports:
       - "6971:6971"
+    networks:
+      - leminiskata
+
+  height_service:
+    build: ./src/backend/height_service
+    command: python main.py
+    depends_on:
+      - gateway
+    ports:
+      - "6972:6972"
     networks:
       - leminiskata
 
