@@ -14,7 +14,7 @@ def index():
 def fetch_weather_data() -> str:
     longitude = request.args.get('longitude')
     latitude = request.args.get('latitude')
-    day: int = int(request.args.get('day'))
+    day = 0 if request.args.get('day') is None else int(request.args.get('day'))
 
     return weather.check_weather(longitude, latitude, day)
 
