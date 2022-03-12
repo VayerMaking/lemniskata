@@ -6,6 +6,6 @@ ADD . /api
 
 RUN pip install -r requirements.txt
 
-EXPOSE 2001
+EXPOSE 6970
 
-# ENTRYPOINT ["tail", "-f", "/dev/null"]
+# ENTRYPOINT ["tail", "-f", "/dev/null"]0

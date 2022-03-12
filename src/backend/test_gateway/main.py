@@ -1,19 +1,22 @@
-import socket
-import time
-HOST = 'test_gateway'
-PORT = 2001
+import json
+from flask import Flask, jsonify, make_response, request
+import requests
 
-print("Server start at: %s/:%s" % (HOST, PORT))
-print("Waiting for connection...")
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.bind((HOST, PORT))
-s.listen()
-conn, addr = s.accept()
-print('Connected by', addr)
+app = Flask(__name__)
 
-while True:
-    data = conn.recv(1024)
-    if not data:
-        break
-    print(f'Received from: {addr} :', data)
+
+@app.route("/")
+def index():
+    return "lemniskata api index page"
+
+
+@app.route("/qwerty")
+def qwerty():
+    response = requests.post(
+        'http://weather_service:6971/generate/map/weather', json=request.get_json())
+    return response.json()
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=6970)

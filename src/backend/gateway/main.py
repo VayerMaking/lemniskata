@@ -1,6 +1,6 @@
-from flask import Flask, request
+from flask import Flask, jsonify, make_response
+import requests
 
-from src.backend.evals.weather import WeatherEvaluater
 
 app = Flask(__name__)
 
@@ -10,15 +10,12 @@ def index():
     return "lemniskata api index page"
 
 
-@app.route("/api/weather", methods=["GET"])
-def fetch_weather_data() -> str:
-    longitude = request.args.get('longitude')
-    latitude = request.args.get('latitude')
-    day: int = int(request.args.get('day'))
-
-    return weather.check_weather(longitude, latitude, day)
+@app.route("/qwerty")
+def qwerty():
+    response = requests.get('http://test_service:8080/asdf')
+    return response.json()
 
 
 if __name__ == "__main__":
-    weather = WeatherEvaluater()
-    app.run(host="0.0.0.0", port=6969)
+    app.run(host="0.0.0.0", port=6970)
+
