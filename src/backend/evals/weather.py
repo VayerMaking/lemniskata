@@ -12,7 +12,7 @@ class WeatherEvaluater:
 
     def check_weather(self, longitude, latitude, day):
         weather_data = requests \
-            .get("https://api.nasa.gov/insight_weather/",  # TODO
+            .get("http://wheather_api:6969/",
                  params={"longitude": longitude, "latitude": latitude}).json()
         day_weather = weather_data["sol_keys"][day]
 

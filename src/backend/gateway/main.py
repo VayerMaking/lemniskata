@@ -11,7 +11,7 @@ def index():
 
 
 @app.route("/api/weather", methods=["GET"])
-def fetch_weather_data() -> str:
+def fetch_weather_data():
     longitude = request.args.get('longitude')
     latitude = request.args.get('latitude')
     day = 0 if request.args.get('day') is None else int(request.args.get('day'))
