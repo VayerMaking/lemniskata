@@ -1,4 +1,5 @@
-from flask import Flask, jsonify, make_response
+import json
+from flask import Flask, jsonify, make_response, request
 import requests
 
 
@@ -12,8 +13,9 @@ def index():
 
 @app.route("/qwerty")
 def qwerty():
-    response = requests.get('http://test_service:8080/asdf')
-    # response.raise_for_status()
+    response = requests.post(
+        'http://weather_service:6971/generate/map/weather', json=request.get_json())
+
     return response.json()
 
 
