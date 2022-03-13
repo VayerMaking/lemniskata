@@ -8,24 +8,6 @@ services:
     networks:
       - lemniskata
 
-  test_gateway:
-    build: ./src/backend/test_gateway
-    command: python main.py
-    ports:
-      - "6970:6970"
-    networks:
-      - lemniskata
-
-  test_service:
-    build: ./src/backend/test_service
-    command: python main.py
-    depends_on:
-      - test_gateway
-    ports:
-      - "8080:8080"
-    networks:
-      - lemniskata
-
   weather_service:
     build: ./src/backend/weather_service
     command: python main.py
