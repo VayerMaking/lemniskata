@@ -32,8 +32,7 @@ class MyHandler(BaseHTTPRequestHandler):
                 img = Image.open(BytesIO(img_res.content))
                 # TODO call algorithm
 
-            self.wfile.write(json.dumps(urls_array).encode(
-                "utf-8", errors='ignore'))
+            self.wfile.write(bytes(str(urls_array).encode('utf-8')))
 
 
 httpd = socketserver.TCPServer(("height_service", 6972), MyHandler)

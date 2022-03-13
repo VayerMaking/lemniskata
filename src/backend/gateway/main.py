@@ -1,3 +1,4 @@
+import json
 from flask import Flask, jsonify, make_response, request
 from flask_cors import CORS
 import requests
@@ -24,7 +25,7 @@ def getHeightMap():
     # TODO read coordinates from json body, dl image for coordinates and pass it to service
     response = requests.post(
         'http://height_service:6972/generate/map/height', json=request.get_json())
-    return response.json()
+    return json.dumps(response.text[2:(len(response.text)-2)].split('\', \''))
 
 
 @app.route("/getWeatherMap", methods=['POST'])
@@ -32,7 +33,7 @@ def getWeatherMap():
     # TODO read coordinates from json body, dl image for coordinates and pass it to service
     response = requests.post(
         'http://weather_service:6971/generate/map/weather', json=request.get_json())
-    return response.json()
+    return json.dumps(response.text[2:(len(response.text)-2)].split('\', \''))
 
 
 if __name__ == "__main__":

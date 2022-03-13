@@ -22,9 +22,9 @@ class MyHandler(BaseHTTPRequestHandler):
         if self.path == '/generate/map/weather':
             content_length = int(self.headers['Content-Length'])
             body = self.rfile.read(content_length)
-            weather_eval(json.loads(body)['longitude'], json.loads(body)['latitude'],
-                         0 if json.loads(body)['day'] is None else int(json.loads(body)['day']))
-            self.wfile.write(body)
+            we = weather_eval(json.loads(body)['longitude'], json.loads(body)['latitude'],
+                              0 if json.loads(body)['day'] is None else int(json.loads(body)['day']))
+            self.wfile.write(bytes(str(we).encode('utf-8')))
 
 
 httpd = socketserver.TCPServer(("weather_service", 6971), MyHandler)
