@@ -40,7 +40,7 @@ const fillBlueOptions = { fillColor: 'blue' }
 
 const ShowPoly = ({ mapContainer, polygons }) => {
   return polygons.map((poly, index) => {
-    return  <Circle key={index} uniceid={index} center={poly} pathOptions={purpleOptions} radius={500000} />
+    return  <Circle key={index} center={poly} pathOptions={purpleOptions} radius={500000} />
   })
 }
 
@@ -134,10 +134,9 @@ const GetMousePos = ({map, weather, terrain}) => {
                 if (128 - Math.abs(e.layerPoint.y - y) > 0 && 128 - Math.abs(e.layerPoint.x - x) > 0) {
                     console.log(x, y);
                     //console.log(e.layerPoint.x, e.layerPoint.y);
-                    let picZ = children[k].src.split('https://trek.nasa.gov/tiles/Mars/EQ/Mars_MOLA_blend200ppx_HRSC_ClrShade_clon0dd_200mpp_lzw/1.0.0//default/default028mm/')[1].split('/')[0];
-                    let picY = children[k].src.split('https://trek.nasa.gov/tiles/Mars/EQ/Mars_MOLA_blend200ppx_HRSC_ClrShade_clon0dd_200mpp_lzw/1.0.0//default/default028mm/')[1].split('/')[1];
-                    let picX = children[k].src.split('https://trek.nasa.gov/tiles/Mars/EQ/Mars_MOLA_blend200ppx_HRSC_ClrShade_clon0dd_200mpp_lzw/1.0.0//default/default028mm/')[1].split('/')[2].split('.')[0];
-                    
+                    var picZ = children[k].src.split('https://trek.nasa.gov/tiles/Mars/EQ/Mars_MOLA_blend200ppx_HRSC_ClrShade_clon0dd_200mpp_lzw/1.0.0//default/default028mm/')[1].split('/')[0];
+                    var picY = children[k].src.split('https://trek.nasa.gov/tiles/Mars/EQ/Mars_MOLA_blend200ppx_HRSC_ClrShade_clon0dd_200mpp_lzw/1.0.0//default/default028mm/')[1].split('/')[1];
+                    var picX = children[k].src.split('https://trek.nasa.gov/tiles/Mars/EQ/Mars_MOLA_blend200ppx_HRSC_ClrShade_clon0dd_200mpp_lzw/1.0.0//default/default028mm/')[1].split('/')[2].split('.')[0];                    
 
                     let iter = Iter(picX, picY, Number(picZ))
 
@@ -158,7 +157,7 @@ const GetMousePos = ({map, weather, terrain}) => {
 
             const config = {
                 method: 'post',
-                url: 'http://e6ee-91-238-251-84.ngrok.io/getWeatherMap',
+                url: 'http://e6ee-91-238-251-84.ngrok.io/getHeightMap',
                 headers: {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
