@@ -1,4 +1,6 @@
 # lemniskata
+![image](https://user-images.githubusercontent.com/36764968/158046288-e8b3962d-2cea-414d-a077-8712512da75c.png)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Latest release](https://img.shields.io/github/v/release/VayerMaking/lemniskata?include_prereleases&label=latest)](https://img.shields.io/github/v/release/VayerMaking/lemniskata?include_prereleases&label=latest)
 [![Vercel App](https://vercelbadge.vercel.app/api/VayerMaking/lemniskata?style=flat)](https://vercelbadge.vercel.app/api/VayerMaking/lemniskata?style=flat)
@@ -43,4 +45,5 @@ There's also a frontend from which the coefficients could be supplied. The map t
 ![SpaceMaps(1)](https://user-images.githubusercontent.com/36995171/158045488-73d1e080-aebd-414f-b80f-263f2ff9c57b.jpg)
 
 
-
+# Credits
+<a href="https://www.flaticon.com/free-icons/planet" title="planet icons">Planet icons created by Freepik - Flaticon</a>
