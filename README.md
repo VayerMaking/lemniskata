@@ -1,4 +1,8 @@
 # lemniskata
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Latest release](https://img.shields.io/github/v/release/VayerMaking/lemniskata?include_prereleases&label=latest)](https://img.shields.io/github/v/release/VayerMaking/lemniskata?include_prereleases&label=latest)
+
+
 The current repo consists of a repo for project of team Lemniskata of Hack TUES Infinity (Hack TUES 8). This is an analyzer of the probability that a certain piece of the planet Mars is favourable for landing. 
 
 ## Factors for evaluation
