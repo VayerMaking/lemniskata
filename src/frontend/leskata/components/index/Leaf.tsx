@@ -136,8 +136,7 @@ const GetMousePos = ({map, weather, terrain}) => {
                     //console.log(e.layerPoint.x, e.layerPoint.y);
                     var picZ = children[k].src.split('https://trek.nasa.gov/tiles/Mars/EQ/Mars_MOLA_blend200ppx_HRSC_ClrShade_clon0dd_200mpp_lzw/1.0.0//default/default028mm/')[1].split('/')[0];
                     var picY = children[k].src.split('https://trek.nasa.gov/tiles/Mars/EQ/Mars_MOLA_blend200ppx_HRSC_ClrShade_clon0dd_200mpp_lzw/1.0.0//default/default028mm/')[1].split('/')[1];
-                    var picX = children[k].src.split('https://trek.nasa.gov/tiles/Mars/EQ/Mars_MOLA_blend200ppx_HRSC_ClrShade_clon0dd_200mpp_lzw/1.0.0//default/default028mm/')[1].split('/')[2].split('.')[0];
-                    
+                    var picX = children[k].src.split('https://trek.nasa.gov/tiles/Mars/EQ/Mars_MOLA_blend200ppx_HRSC_ClrShade_clon0dd_200mpp_lzw/1.0.0//default/default028mm/')[1].split('/')[2].split('.')[0];                    
 
                     let iter = Iter(picX, picY, Number(picZ))
 
@@ -169,6 +168,7 @@ const GetMousePos = ({map, weather, terrain}) => {
             axios(config)
                 .then(function (response) {
                     console.log(JSON.stringify(response.data));
+                    
                 })
                 .catch(function (error) {
                     console.log(error);
