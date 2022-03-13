@@ -27,7 +27,7 @@ def getHeightMap():
     return response.json()
 
 
-@app.route("/getWeatherMap")
+@app.route("/getWeatherMap", methods=['POST'])
 def getWeatherMap():
     # TODO read coordinates from json body, dl image for coordinates and pass it to service
     response = requests.post(
