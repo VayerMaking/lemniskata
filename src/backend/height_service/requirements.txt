@@ -1,2 +1,10 @@
 requests>=2.27.1
 Pillow==9.0.1
+python-opencv
+scipy
+numpy
+matplotlib
+PIL
+mpl_toolkits
+geojson
+scipy

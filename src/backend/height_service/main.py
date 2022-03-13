@@ -6,8 +6,6 @@ import requests
 from io import BytesIO
 
 
-# TODO import height map algorithm here
-
 class MyHandler(BaseHTTPRequestHandler):
     def _set_headers(self):
         self.send_response(200)
