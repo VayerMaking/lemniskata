@@ -19,3 +19,22 @@ There's also a frontend from which the coefficients could be supplied. The map t
 
 ![Untitled Diagram drawio(2)](https://user-images.githubusercontent.com/36995171/158036757-20c2d760-f166-436f-bbfb-90f496fcabc7.png)
 
+## Presentation
+![Copy of SpaceMaps](https://user-images.githubusercontent.com/36995171/158045339-7a4cb86b-bb72-4d15-ad10-a43eb31b8e03.jpg)
+![Copy of SpaceMaps(1)](https://user-images.githubusercontent.com/36995171/158045335-f93ac483-2f99-475b-baeb-c744d1924efc.jpg)
+![Copy of SpaceMaps(2)](https://user-images.githubusercontent.com/36995171/158045337-7281f5c1-5f49-4371-9709-a3d92ed91871.jpg)
+![Copy of SpaceMaps(3)](https://user-images.githubusercontent.com/36995171/158045333-184cad74-d236-47e6-97e1-97ee78c1b992.jpg)
+
+![Copy of SpaceMaps(8)](https://user-images.githubusercontent.com/36995171/158045468-71b1f3a5-7f99-4b28-b355-b6414a5183bc.jpg)
+![Copy of SpaceMaps(7)](https://user-images.githubusercontent.com/36995171/158045470-47bcb04b-bfe8-40ab-9299-7e27caa5c0b4.jpg)
+
+![SpaceMaps(5)](https://user-images.githubusercontent.com/36995171/158045475-cf8c12fa-07ed-4226-91f6-4cf209161089.jpg)
+![SpaceMaps(4)](https://user-images.githubusercontent.com/36995171/158045477-f75bdcc6-64a5-46ff-ab0f-4c9a927ff3ab.jpg)
+![SpaceMaps(3)](https://user-images.githubusercontent.com/36995171/158045482-665095ab-898f-4097-bfd5-61137eefb319.jpg)
+![SpaceMaps(2)](https://user-images.githubusercontent.com/36995171/158045484-29bc14de-a3a9-4050-803e-5c28b62ec0a0.jpg)
+
+
+![SpaceMaps(1)](https://user-images.githubusercontent.com/36995171/158045488-73d1e080-aebd-414f-b80f-263f2ff9c57b.jpg)
+
+
+
