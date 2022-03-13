@@ -29,8 +29,8 @@ class TopoEvaluator:
     def __clusterize(self, data):
         model = DBSCAN(eps=2.5, min_samples=2, algorithm='ball_tree', n_jobs=4)
         model.fit(data)
-        print(f'# clusters: {len(set(model.labels_))}')
-        print(f'labels {model.labels_}')
+        # print(f'# clusters: {len(set(model.labels_))}')
+        # print(f'labels {model.labels_}')
         return dict(filter(lambda e: e[1] >= 0, zip(data, model.labels_)))
 
 
@@ -80,7 +80,7 @@ class TopoEvaluator:
     '''
     def __make_probab_map(self, grouped_clusters, centroids):
         probab_map = {}
-        print("Centroids")
+        # print("Centroids")
         for cluster_id in grouped_clusters.keys():
             cluster_prob_map = {}
             cluster_centroid = centroids[cluster_id]
@@ -91,7 +91,7 @@ class TopoEvaluator:
             cluster_prob_map = dict(sorted(cluster_prob_map.items(), key = itemgetter(1)))
             assert len(list(cluster_prob_map.values())) > 0
             max_dist = max(cluster_prob_map.values())
-            print(f"#{cluster_id}: cluster_prob_map = {cluster_prob_map}")
+            # print(f"#{cluster_id}: cluster_prob_map = {cluster_prob_map}")
             for k, _ in cluster_prob_map.items():
                 cluster_prob_map[k] /= max_dist
             probab_map[cluster_id] = cluster_prob_map
@@ -103,10 +103,10 @@ class TopoEvaluator:
     Selects points which should be passed back to gateway for rendering.
     '''
     def __geoborders(self, grouped_clusters, probab_map):
-        N = 10
-        gb = {cluster_id:list(probab_map[cluster_id].values())[:N] for cluster_id, coords3d in grouped_clusters.items()}
+        N = 4
+        gb = {}
         for cluster_id, coords3d in grouped_clusters.items():
-            gb[cluster_id] = list(probab_map[cluster_id].values())[:N]
+            gb[cluster_id] = list(probab_map[cluster_id].keys())[:N]
         return gb
 
     '''

@@ -4,6 +4,7 @@ from http.server import BaseHTTPRequestHandler
 from PIL import Image
 import requests
 from io import BytesIO
+import numpy as np
 
 from topo import *
 
@@ -28,21 +29,35 @@ def multistep(bd):
     results = topo_evaluator.eval()
 
     response = {}
+    response_short = {}
     i = 0
     # Iterate over tiles
-    for tile_name, ss_res in results.items():
-        pm, _ = tuple(ss_res)
+    for tile_id, ss_res in results.items():
+        pm, gb = tuple(ss_res)
         pm_response = []
+        gb_response = []
         i += 1
         # Iterate over prob maps of clusters in a single tile
         for cluster, points in pm.items():
             for coords3d, p in points.items():
                 x,y,z = coords3d
-                pm_response.append({'x':x,'y':y,'z':z,'p':p})
-        response[tile_name] = pm_response
-        with open(f'{tile_id}.json', 'w') as fp:
-            json.dump(response, fp)
-    return urls
+                pm_response.append({'x':x,'y':y,'z':z,'p':float(p)})
+        response[tile_id] = pm_response
+        # Iterate over geo borders in a single tile
+        for cluster_id, boundary_points in gb.items():
+            for bp in boundary_points:
+                x, y, z = tuple(bp)
+                x += cluster_id % 3 * 256 - 256 - 128
+                y += cluster_id / 3 * 256 - 256 - 128
+                gb_response.append({'x':x,'y':y,'z':z,'p':float(pm[cluster_id][bp])})
+        response_short[tile_id] = gb_response
+        # print(f"tile_id = {tile_id}")
+        # def np_encoder(object):
+        #     if isinstance(object, np.generic):
+        #         return object.item()
+        # with open(f'{tile_id}.json', 'w') as fp:
+        #     json.dump(response_short, fp, default=np_encoder)
+    return response_short
 
 
 class TopoService(BaseHTTPRequestHandler):
@@ -64,8 +79,8 @@ class TopoService(BaseHTTPRequestHandler):
         if self.path != '/generate/map/height':
             return
         self.__set_headers()
-        urls = multistep(self.__body())
-        self.wfile.write(bytes(str(urls).encode('utf-8')))
+        res = multistep(self.__body())
+        self.wfile.write(bytes(str(res).encode('utf-8')))
 
 
 if __name__ == "__main__":
