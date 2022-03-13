@@ -6,9 +6,9 @@ class WeatherEvaluater:
         super().__init__()
         self.api_url = "https://api.nasa.gov/insight_weather/"
 
-        self.__weather_temperature_boundaries = range(-50, -7)
+        self.__weather_temperature_boundaries = range(-64, -7)
         self.__weather_pressure_boundaries = range(682, 730)
-        self.__weather_wind_boundaries = range(5, 12)
+        self.__weather_wind_boundaries = range(2, 15)
 
     def check_weather(self, longitude, latitude, day):
         weather_data = requests \
