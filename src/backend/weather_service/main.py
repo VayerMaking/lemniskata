@@ -22,18 +22,19 @@ class MyHandler(BaseHTTPRequestHandler):
         if self.path == '/generate/map/weather':
             content_length = int(self.headers['Content-Length'])
             body = self.rfile.read(content_length)
-            we = weather_eval(json.loads(body)['longitude'], json.loads(body)['latitude'],
-                              0 if json.loads(body)['day'] is None else int(json.loads(body)['day']))
-            self.wfile.write(bytes(str(we).encode('utf-8')))
+
+            result = dict()
+            for value in json.loads(body):
+                longitude = value['x']
+                latitude = value['y']
+                try:
+                    day = value[2]
+                except IndexError:
+                    day = 0
+                result[[longitude, latitude]] = weather_eval(longitude, latitude, day)
+
+            self.wfile.write(bytes(str(result).encode('utf-8')))
 
 
 httpd = socketserver.TCPServer(("weather_service", 6971), MyHandler)
 httpd.serve_forever()
-
-# @app.route("/api/weather", methods=["GET"])
-# def fetch_weather_data():
-# longitude = request.args.get('longitude')
-# latitude = request.args.get('latitude')
-# day = 0 if request.args.get('day') is None else int(request.args.get('day'))
-
-# return weather.check_weather(longitude, latitude, day)
