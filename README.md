@@ -21,7 +21,8 @@ For the weather analysis is build upon the NASA's API data from the [InSight Mis
 
 There's also a frontend from which the coefficients could be supplied. The map there works analogically to Google Maps's dragging through the planet.
 
-![Untitled Diagram drawio(2)](https://user-images.githubusercontent.com/36995171/158036757-20c2d760-f166-436f-bbfb-90f496fcabc7.png)
+
+![arch](https://user-images.githubusercontent.com/36995171/158045783-9d4ae068-3c0f-43f9-a595-d0daf1bb65e6.png)
 
 ## Presentation
 ![Copy of SpaceMaps](https://user-images.githubusercontent.com/36995171/158045339-7a4cb86b-bb72-4d15-ad10-a43eb31b8e03.jpg)
