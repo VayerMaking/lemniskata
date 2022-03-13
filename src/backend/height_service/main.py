@@ -22,7 +22,7 @@ def multistep(bd):
     images = {}
     tiles = []
     urls = []
-    for j in json.loads(bd):  # FIXME: load?
+    for j in json.loads(bd):
         url = api_url(j['x'], j['y'], j['z'])
         urls.append(url)
         tile_id = f"tile{j['x']}{j['y']}{j['z']}"
@@ -34,6 +34,7 @@ def multistep(bd):
     response = {}
     response_short = {}
     i = 0
+    j = 0
     # Iterate over tiles
     for tile_id, ss_res in results.items():
         pm, gb = tuple(ss_res)
@@ -57,13 +58,17 @@ def multistep(bd):
                 cluster_bp[cluster_id].append(
                     {'x': x, 'y': y, 'z': z, 'p': float(pm[cluster_id][bp])})
             gb_response.append(cluster_bp)
+            if j >= 10:
+                break
+            j += 1
         response_short[tile_id] = gb_response
-        # print(f"tile_id = {tile_id}")
-        # def np_encoder(object):
-        #     if isinstance(object, np.generic):
-        #         return object.item()
+        print(f"tile_id = {tile_id}")
+        def np_encoder(object):
+            if isinstance(object, np.generic):
+                return object.item()
         # with open(f'{tile_id}.json', 'w') as fp:
-        #     json.dump(response_short, fp, default=np_encoder)
+        #    json.dump(response_short, fp, default=np_encoder)
+        break
     return response_short
 
 
