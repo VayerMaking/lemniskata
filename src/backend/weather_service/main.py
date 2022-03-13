@@ -29,9 +29,9 @@ class MyHandler(BaseHTTPRequestHandler):
                 latitude = value['y']
                 try:
                     day = value[2]
-                except IndexError:
+                except KeyError:
                     day = 0
-                result[[longitude, latitude]] = weather_eval(longitude, latitude, day)
+                result["{}:{}".format(longitude, latitude)] = weather_eval(longitude, latitude, day)
 
             self.wfile.write(bytes(str(result).encode('utf-8')))
 
