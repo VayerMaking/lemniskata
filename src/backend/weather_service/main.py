@@ -2,7 +2,7 @@ import json
 import socketserver
 from http.server import BaseHTTPRequestHandler
 
-from src.backend.evals.weather import WeatherEvaluater
+from weather import WeatherEvaluater
 
 
 def weather_eval(longitude, latitude, day):
