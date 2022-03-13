@@ -1,8 +1,0 @@
-python-opencv
-scipy
-numpy
-matplotlib
-PIL
-mpl_toolkits
-geojson
-scipy
