@@ -22,7 +22,7 @@ def multistep(bd):
     for j in json.loads(bd): # FIXME: load?
         url = api_url(j['x'], j['y'], j['z'])
         urls.append(url)
-        tile_id = f"Tile-{j['x']}-{j['y']}-{j['z']}"
+        tile_id = f"tile{j['x']}{j['y']}{j['z']}"
         tiles.append(tile_id)
         images[tile_id] = Image.open(BytesIO(requests.get(url).content))
     topo_evaluator = TopoEvaluator(images)
@@ -45,11 +45,14 @@ def multistep(bd):
         response[tile_id] = pm_response
         # Iterate over geo borders in a single tile
         for cluster_id, boundary_points in gb.items():
+            cluster_bp = {}
+            cluster_bp[cluster_id] = []
             for bp in boundary_points:
                 x, y, z = tuple(bp)
                 x += cluster_id % 3 * 256 - 256 - 128
                 y += cluster_id / 3 * 256 - 256 - 128
-                gb_response.append({'x':x,'y':y,'z':z,'p':float(pm[cluster_id][bp])})
+                cluster_bp[cluster_id].append({'x':x,'y':y,'z':z,'p':float(pm[cluster_id][bp])})
+            gb_response.append(cluster_bp)
         response_short[tile_id] = gb_response
         # print(f"tile_id = {tile_id}")
         # def np_encoder(object):
