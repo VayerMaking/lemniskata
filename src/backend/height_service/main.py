@@ -34,7 +34,7 @@ def multistep(bd):
     response = {}
     response_short = {}
     i = 0
-    j = 0
+    # j = 0
     # Iterate over tiles
     for tile_id, ss_res in results.items():
         pm, gb = tuple(ss_res)
@@ -58,9 +58,9 @@ def multistep(bd):
                 cluster_bp[cluster_id].append(
                     {'x': x, 'y': y, 'z': z, 'p': float(pm[cluster_id][bp])})
             gb_response.append(cluster_bp)
-            if j >= 10:
-                break
-            j += 1
+            # if j >= 10:
+            #     break
+            # j += 1
         response_short[tile_id] = gb_response
         print(f"tile_id = {tile_id}")
         def np_encoder(object):
@@ -68,7 +68,7 @@ def multistep(bd):
                 return object.item()
         # with open(f'{tile_id}.json', 'w') as fp:
         #    json.dump(response_short, fp, default=np_encoder)
-        break
+        # break
     return response_short
 
 
