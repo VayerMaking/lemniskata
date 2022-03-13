@@ -85,4 +85,3 @@ class TopoService(BaseHTTPRequestHandler):
 
 if __name__ == "__main__":
     httpd = socketserver.TCPServer(("height_service", 6972), TopoService)
-    httpd.serve_forever()
