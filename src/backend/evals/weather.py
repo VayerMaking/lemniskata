@@ -16,11 +16,13 @@ class WeatherEvaluater:
                  params={"longitude": longitude, "latitude": latitude}).json()
         day_weather = weather_data["sol_keys"][int(day)]
 
+        valid_weather = [1 if (day_weather["AT"] in self.__weather_temperature_boundaries) else 0,
+                         1 if (day_weather["PRE"] in self.__weather_pressure_boundaries) else 0,
+                         1 if (day_weather["HWS"] in self.__weather_wind_boundaries) else 0]
+
         return dict(
-            temperature=day_weather["AT"],
-            pressure=day_weather["PRE"],
-            wind=day_weather["HWS"],
-            valid=(True if (day_weather["AT"] in self.__weather_temperature_boundaries) and
-                           (day_weather["PRE"] in self.__weather_pressure_boundaries) and
-                           (day_weather["HWS"] in self.__weather_wind_boundaries) else False)
+            temperature={day_weather["AT"], valid_weather[0]},
+            pressure={day_weather["PRE"], valid_weather[1]},
+            wind={day_weather["HWS"], valid_weather[2]},
+            validity_coefficient=sum(valid_weather) / 3
         )
