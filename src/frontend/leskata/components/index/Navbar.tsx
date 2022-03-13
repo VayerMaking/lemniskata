@@ -1,9 +1,14 @@
 import { useState } from 'react';
-import { AppShell, Burger, Header, MediaQuery, Navbar, Text, useMantineTheme } from '@mantine/core';
+import { AppShell, Burger, Header, MediaQuery, Navbar, Text, useMantineTheme, Checkbox } from '@mantine/core';
+import dynamic from 'next/dynamic'
 
 export function Nav() {
   const [opened, setOpened] = useState(false);
   const theme = useMantineTheme();
+
+  const Map = dynamic(() => import('./Leaf'), { ssr: false });
+  const [checkedTerrain, setCheckTerrain] = useState(false);
+  const [checkedWeather, setCheckWeather] = useState(false);
 
   return (
     <AppShell
@@ -21,13 +26,14 @@ export function Nav() {
           // when viewport size is less than theme.breakpoints.sm navbar width is 100%
           // viewport size > theme.breakpoints.sm – width is 300px
           // viewport size > theme.breakpoints.lg – width is 400px
-          width={{ sm: 300, lg: 400 }}
+          width={{ sm: 300, lg: 300 }}
         >
-          <Text>Application navbar</Text>
+          <Checkbox style={{paddingBottom:"5px"}} checked={checkedTerrain} onChange={(event) => setCheckTerrain(event.currentTarget.checked)} label="Terrain" />
+          <Checkbox checked={checkedWeather} onChange={(event) => setCheckWeather(event.currentTarget.checked)} label="Weather" />
         </Navbar>
       }
       header={
-        <Header height={70} p="md">
+        <Header height={0} p="md">
           {/* Handle other responsive styles with MediaQuery component or createStyles function */}
           <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
             <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
@@ -40,12 +46,12 @@ export function Nav() {
               />
             </MediaQuery>
 
-            <Text>Application header</Text>
+            
           </div>
         </Header>
       }
     >
-      <Text>Resize app to see responsive navbar in action</Text>
+      <Map weather={checkedWeather} terrain={checkedTerrain}/>
     </AppShell>
   );
 }
