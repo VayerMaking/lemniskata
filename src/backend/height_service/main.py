@@ -8,18 +8,21 @@ import numpy as np
 
 from topo import *
 
+
 def b():
     with open('harry_json.json', 'r') as f:
         return f.read()
 
+
 def api_url(x, y, z):
-        return f'https://trek.nasa.gov/tiles/Mars/EQ/Mars_MOLA_blend200ppx_HRSC_ClrShade_clon0dd_200mpp_lzw/1.0.0//default/default028mm/{z}/{y}/{x}.jpg'
+    return f'https://trek.nasa.gov/tiles/Mars/EQ/Mars_MOLA_blend200ppx_HRSC_ClrShade_clon0dd_200mpp_lzw/1.0.0//default/default028mm/{z}/{y}/{x}.jpg'
+
 
 def multistep(bd):
     images = {}
     tiles = []
     urls = []
-    for j in json.loads(bd): # FIXME: load?
+    for j in json.loads(bd):  # FIXME: load?
         url = api_url(j['x'], j['y'], j['z'])
         urls.append(url)
         tile_id = f"Tile-{j['x']}-{j['y']}-{j['z']}"
@@ -40,8 +43,8 @@ def multistep(bd):
         # Iterate over prob maps of clusters in a single tile
         for cluster, points in pm.items():
             for coords3d, p in points.items():
-                x,y,z = coords3d
-                pm_response.append({'x':x,'y':y,'z':z,'p':float(p)})
+                x, y, z = coords3d
+                pm_response.append({'x': x, 'y': y, 'z': z, 'p': float(p)})
         response[tile_id] = pm_response
         # Iterate over geo borders in a single tile
         for cluster_id, boundary_points in gb.items():
@@ -49,7 +52,8 @@ def multistep(bd):
                 x, y, z = tuple(bp)
                 x += cluster_id % 3 * 256 - 256 - 128
                 y += cluster_id / 3 * 256 - 256 - 128
-                gb_response.append({'x':x,'y':y,'z':z,'p':float(pm[cluster_id][bp])})
+                gb_response.append(
+                    {'x': x, 'y': y, 'z': z, 'p': float(pm[cluster_id][bp])})
         response_short[tile_id] = gb_response
         # print(f"tile_id = {tile_id}")
         # def np_encoder(object):
@@ -70,10 +74,8 @@ class TopoService(BaseHTTPRequestHandler):
         self.send_header('Content-type', 'application/json')
         self.end_headers()
 
-
     def __body(self):
         return self.rfile.read(int(self.headers['Content-Length']))
-
 
     def do_POST(self):
         if self.path != '/generate/map/height':
@@ -85,3 +87,4 @@ class TopoService(BaseHTTPRequestHandler):
 
 if __name__ == "__main__":
     httpd = socketserver.TCPServer(("height_service", 6972), TopoService)
+    httpd.serve_forever()
