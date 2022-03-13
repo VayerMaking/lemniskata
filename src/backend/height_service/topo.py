@@ -12,8 +12,9 @@ from scipy.spatial import distance
 
 class TopoEvaluator:
 
-    def __init__(self, fimgs = []):
-        self.fimgs = fimgs
+    def __init__(self, fimgs = {}):
+        self.fimgs_nm = list(fimgs.keys())
+        self.fimgs = list(fimgs.values())
 
     def __preprocess_img(self, img):
         img_data = np.asarray(img)
@@ -119,8 +120,11 @@ class TopoEvaluator:
         centroids = self.__estimate_centroids(grouped_clusters)
         probab_map = self.__make_probab_map(grouped_clusters, centroids)
         gb = self.__geoborders(grouped_clusters, probab_map)
+        return probab_map, gb
 
 
     def eval(self):
-        total = [self.__single_step(fimg) for fimg in self.fimgs]
-        return total
+        result = {}
+        for i, fimg in enumerate(self.fimgs):
+            result[self.fimgs_nm[i]] = self.__single_step(fimg)
+        return result
